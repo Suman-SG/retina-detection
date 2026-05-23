@@ -1,96 +1,142 @@
-# SAVADHAN - Retina Detection
+# Retina Disease Detection using Deep Learning
 
-Professional snapshot of the SAVADHAN Retina Screening project.
+## Overview
 
-## Project overview
+This project presents a deep learning–based retinal disease detection system designed for binary classification of retinal fundus images.
 
-SAVADHAN is a research and experimentation repository for binary retinal image classification (disease vs. no disease). The codebase includes data processing, training scripts, model checkpoints, evaluation utilities, and a small Streamlit demo for local inspection.
+The system classifies retinal scans into:
 
-This repository is provided as-is for reproducibility and demonstration purposes.
+- Diseased Retina
+- Healthy Retina
 
-## Highlights
+The repository includes:
 
-- Demo application: `binary/web/smart_app.py` (Streamlit)
-- Core scripts: `train.py`, `evaluate.py`, `predict.py`
-- Evaluation outputs: `evaluation_results.csv`, `performance_summary.png`, `confusion_matrix.png`
+- Model training pipeline
+- Evaluation utilities
+- Prediction scripts
+- Performance visualization
+- Streamlit-based web interface for testing
 
-## Quick example: computing metrics
+The objective of this project is to demonstrate the application of computer vision and deep learning techniques in automated medical image analysis.
 
-Use the included `evaluation_results.csv` to compute standard classification metrics. Example:
+## Features
 
-```python
-import csv
-from collections import Counter
-from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
+- Binary retinal image classification
+- Deep learning model training and evaluation
+- Streamlit web application for prediction
+- Confusion matrix and performance visualization
+- CSV-based prediction analysis
+- Modular Python implementation
 
-rows = list(csv.DictReader(open('evaluation_results.csv', newline='')))
-y_true = [int(r['true_label']) for r in rows]
-y_pred = [int(r['predicted_label']) for r in rows]
+## Project Structure
 
-print('n =', len(rows))
-print('accuracy =', accuracy_score(y_true, y_pred))
-print('precision =', precision_score(y_true, y_pred, average='binary'))
-print('recall =', recall_score(y_true, y_pred, average='binary'))
-print('f1 =', f1_score(y_true, y_pred, average='binary'))
-
-print('true_counts =', Counter(y_true))
-print('pred_counts =', Counter(y_pred))
+```
+retina-detection/
+│
+├── binary/web/              # Streamlit web application
+├── train.py                 # Model training script
+├── evaluate.py              # Evaluation script
+├── predict.py               # Prediction script
+├── model.py                 # Model architecture
+├── utils.py                 # Helper utilities
+├── requirements.txt         # Dependencies
+│
+├── evaluation_results.csv
+├── confusion_matrix.png
+├── performance_summary.png
+└── README.md
 ```
 
-Install scikit-learn if needed: `pip install scikit-learn`
+## Technologies Used
 
-## Running locally (recommended workflow)
+- Python
+- TensorFlow / Keras
+- OpenCV
+- NumPy
+- Pandas
+- Matplotlib
+- Streamlit
 
-1. Create and activate a virtual environment:
+## Installation
 
-```powershell
-cd C:\\path\\to\\retina_detection
+Clone the repository:
+
+```bash
+git clone https://github.com/Suman-SG/retina-detection.git
+cd retina-detection
+```
+
+Create a virtual environment:
+
+```bash
 python -m venv .venv
-.\\.venv\\Scripts\\Activate.ps1
+```
+
+Activate environment (Windows):
+
+```bash
+.venv\Scripts\activate
+```
+
+Install dependencies:
+
+```bash
 pip install -r requirements.txt
 ```
 
-2. Start the Streamlit demo (uses a saved model):
+## Running the Web Application
 
-```powershell
+```bash
 cd binary/web
-# set MODEL_PATH to a valid model file
-$env:MODEL_PATH = 'C:\\full\\path\\to\\binary\\models\\quick_test_model.h5'
 streamlit run smart_app.py
 ```
 
-3. Evaluate predictions (example):
+## Model Evaluation
 
-```powershell
-python evaluate.py --pred predictions.csv --truth ground_truth.csv
+Example evaluation command:
+
+```bash
+python evaluate.py
 ```
 
-4. Run inference (example):
+Generated outputs include:
 
-```powershell
-python predict.py --model models/binary_fast.keras --input data/images/ --output out.csv
-```
+- Accuracy metrics
+- Precision / Recall / F1-score
+- Confusion matrix
+- Performance graphs
 
-5. Training and advanced usage: review `train.py` and `scripts/train_binary.py` for dataset preparation and hyperparameters.
+## Sample Results
 
-## Notes on large files
+The project includes generated evaluation artifacts:
 
-Model and checkpoint files are large — they are excluded from the repository using `.gitignore`. To publish models alongside the code, use Git LFS:
+- `confusion_matrix.png`
+- `performance_summary.png`
+- `evaluation_results.csv`
 
-```powershell
-git lfs install
-git lfs track "*.h5"
-git add .gitattributes
-git commit -m "chore: enable Git LFS for model files"
-git push
-```
+These files provide insight into model performance and prediction quality.
 
-## Contributing and license
+## Future Improvements
 
-This repository is intended as an archived snapshot. If you plan to fork or continue development, please open an issue or submit a pull request with proposed changes. Add a `LICENSE` file if you need a specific copyright or reuse policy.
+- Multi-class retinal disease classification
+- Improved dataset balancing
+- Real-time deployment support
+- Cloud-based inference API
+- Explainable AI visualizations (Grad-CAM)
 
-## Contact and attribution
+## Disclaimer
 
-Maintainer: Suman-SG
+This project is intended for educational and research purposes only.
+It is not a certified medical diagnostic system.
 
-If you want any changes to the repository metadata (description, topics, or visibility), I can update the README further or prepare a short `CONTRIBUTING.md` and `LICENSE` file.
+## Author
+
+**Suman Ghosh**
+GitHub: https://github.com/Suman-SG
+
+## License
+
+This project is open-source and available under the MIT License.
+
+---
+If you'd like, I can also add a short `CONTRIBUTING.md` and a `LICENSE` file, and push everything to the repo.
