@@ -1,121 +1,96 @@
- # SAVADHAN - Retina Detection
+# SAVADHAN - Retina Detection
 
- Final archived snapshot of the SAVADHAN Retina Screening project.
+Professional snapshot of the SAVADHAN Retina Screening project.
 
- ## Summary
+## Project overview
 
- SAVADHAN is an experimental toolkit for binary retinal image classification (disease / no disease). This repository contains training, inference, and a small Streamlit demo for quick evaluation and demonstration.
+SAVADHAN is a research and experimentation repository for binary retinal image classification (disease vs. no disease). The codebase includes data processing, training scripts, model checkpoints, evaluation utilities, and a small Streamlit demo for local inspection.
 
- Status: **Archived - final snapshot**
+This repository is provided as-is for reproducibility and demonstration purposes.
 
- ## Highlights
+## Highlights
 
- - Small Streamlit demo: `binary/web/smart_app.py`
- - Training & evaluation scripts: `train.py`, `evaluate.py`, `predict.py`
- - Models and checkpoints: `models/` and `checkpoints/`
+- Demo application: `binary/web/smart_app.py` (Streamlit)
+- Core scripts: `train.py`, `evaluate.py`, `predict.py`
+- Evaluation outputs: `evaluation_results.csv`, `performance_summary.png`, `confusion_matrix.png`
 
- ## Suggested repository name
+## Quick example: computing metrics
 
- - `retina-detection` (or `savadhan-retina-detection` for branded name)
+Use the included `evaluation_results.csv` to compute standard classification metrics. Example:
 
- ---
- ## Quick metrics (how to reproduce)
+```python
+import csv
+from collections import Counter
+from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
 
- Use the provided `evaluation_results.csv` at the repository root to compute common metrics.
+rows = list(csv.DictReader(open('evaluation_results.csv', newline='')))
+y_true = [int(r['true_label']) for r in rows]
+y_pred = [int(r['predicted_label']) for r in rows]
 
- Example Python snippet that computes accuracy, per-class recall, and a simple summary:
+print('n =', len(rows))
+print('accuracy =', accuracy_score(y_true, y_pred))
+print('precision =', precision_score(y_true, y_pred, average='binary'))
+print('recall =', recall_score(y_true, y_pred, average='binary'))
+print('f1 =', f1_score(y_true, y_pred, average='binary'))
 
- ```python
- import csv
- from collections import Counter
- from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
+print('true_counts =', Counter(y_true))
+print('pred_counts =', Counter(y_pred))
+```
 
- rows = list(csv.DictReader(open('evaluation_results.csv', newline='')))
- y_true = [int(r['true_label']) for r in rows]
- y_pred = [int(r['predicted_label']) for r in rows]
+Install scikit-learn if needed: `pip install scikit-learn`
 
- print('n =', len(rows))
- print('accuracy =', accuracy_score(y_true, y_pred))
- print('precision =', precision_score(y_true, y_pred, average='binary'))
- print('recall =', recall_score(y_true, y_pred, average='binary'))
- print('f1 =', f1_score(y_true, y_pred, average='binary'))
+## Running locally (recommended workflow)
 
- from collections import Counter
- print('true_counts =', Counter(y_true))
- print('pred_counts =', Counter(y_pred))
- ```
+1. Create and activate a virtual environment:
 
- If you don't have `scikit-learn`, install it with `pip install scikit-learn`.
+```powershell
+cd C:\\path\\to\\retina_detection
+python -m venv .venv
+.\\.venv\\Scripts\\Activate.ps1
+pip install -r requirements.txt
+```
 
- ---
- ## How to run (local)
+2. Start the Streamlit demo (uses a saved model):
 
- 1. Create a virtual environment (recommended):
+```powershell
+cd binary/web
+# set MODEL_PATH to a valid model file
+$env:MODEL_PATH = 'C:\\full\\path\\to\\binary\\models\\quick_test_model.h5'
+streamlit run smart_app.py
+```
 
- ```powershell
- cd path\to\retina_detection
- python -m venv .venv
- .\.venv\Scripts\Activate.ps1
- pip install -r requirements.txt
- ```
+3. Evaluate predictions (example):
 
- 2. Run the Streamlit demo (quick demo using a saved model):
+```powershell
+python evaluate.py --pred predictions.csv --truth ground_truth.csv
+```
 
- ```powershell
- cd binary/web
- # set MODEL_PATH environment variable to a model .h5 file
- $env:MODEL_PATH = 'C:\Users\you\...\binary\models\quick_test_model.h5'
- streamlit run smart_app.py
- ```
+4. Run inference (example):
 
- 3. Run evaluation on saved predictions (example):
+```powershell
+python predict.py --model models/binary_fast.keras --input data/images/ --output out.csv
+```
 
- ```powershell
- python evaluate.py --pred predictions.csv --truth ground_truth.csv
- ```
+5. Training and advanced usage: review `train.py` and `scripts/train_binary.py` for dataset preparation and hyperparameters.
 
- 4. Make predictions with `predict.py` (example):
+## Notes on large files
 
- ```powershell
- python predict.py --model models/binary_fast.keras --input data/images/ --output out.csv
- ```
+Model and checkpoint files are large — they are excluded from the repository using `.gitignore`. To publish models alongside the code, use Git LFS:
 
- 5. Train (advanced): read `train.py` and `scripts/train_binary.py` for dataset and hyperparameter details.
+```powershell
+git lfs install
+git lfs track "*.h5"
+git add .gitattributes
+git commit -m "chore: enable Git LFS for model files"
+git push
+```
 
- ---
- ## Notes on models and large files
+## Contributing and license
 
- This snapshot contains model files in `models/` and `checkpoints/`. Many of these are large binary blobs (HDF5 / PyTorch). If you plan to publish the repository on GitHub, consider removing large model files or using Git LFS.
+This repository is intended as an archived snapshot. If you plan to fork or continue development, please open an issue or submit a pull request with proposed changes. Add a `LICENSE` file if you need a specific copyright or reuse policy.
 
- To remove model files from the repo before pushing, delete them locally and add them to `.gitignore`.
+## Contact and attribution
 
- ---
- ## How to push this project to GitHub
+Maintainer: Suman-SG
 
- Option A - using GitHub CLI (recommended, interactive):
-
- ```powershell
- cd path\to\retina_detection
- git init
- git add .
- git commit -m "chore: final snapshot - archive project"
- git branch -M main
- gh repo create USERNAME/retina-detection --public --source=. --remote=origin --push
- ```
-
- Option B - manual on GitHub:
-
- 1. Create a new repository on https://github.com (name: `retina-detection`).
- 2. Then run:
-
- ```powershell
- git remote add origin https://github.com/USERNAME/retina-detection.git
- git push -u origin main
- ```
-
- If you want the repo to be private, choose `--private` when using `gh repo create` or select Private on the website.
-
- ---
- ## Final notes & goodbye
-
- This is an archival snapshot of the project. Thank you for the experiments and work here - goodbye, retina_detection. If you'd like I can create the GitHub repo and push from your machine now; tell me your GitHub username and whether you want the repo public or private.
+If you want any changes to the repository metadata (description, topics, or visibility), I can update the README further or prepare a short `CONTRIBUTING.md` and `LICENSE` file.
