@@ -116,6 +116,8 @@ The project includes generated evaluation artifacts:
 
 These files provide insight into model performance and prediction quality.
 
+![Confusion matrix](confusion_matrix.png)
+
 ## Results
 
 Metrics were computed from `evaluation_results.csv` (500 samples):
@@ -128,15 +130,26 @@ Metrics were computed from `evaluation_results.csv` (500 samples):
 - **Macro recall:** 53.97%
 - **Macro F1-score:** 54.68%
 
+**ROC AUC (from probability outputs):**
+
+- **Per-class AUC:**
+	- No DR: 0.9961
+	- Mild: 0.9208
+	- Moderate: 0.9194
+	- Severe: 0.8995
+	- Proliferative DR: 0.9091
+- **Macro AUC:** 0.9290
+- **Micro AUC:** 0.9671
+
 Per-class breakdown (as recorded in `evaluation_results.csv`):
 
-- **Class 0** — support: 236 — precision: 95.88% — recall: 98.73% — F1: 97.29%
-- **Class 1** — support: 45  — precision: 68.00% — recall: 37.78% — F1: 48.57%
-- **Class 2** — support: 153 — precision: 69.74% — recall: 88.89% — F1: 78.16%
-- **Class 3** — support: 21  — precision: 0.00%  — recall: 0.00%  — F1: 0.00%
-- **Class 4** — support: 45  — precision: 55.56% — recall: 44.44% — F1: 49.38%
+- **No DR** — support: 236 — precision: 95.88% — recall: 98.73% — F1: 97.29%
+- **Mild** — support: 45  — precision: 68.00% — recall: 37.78% — F1: 48.57%
+- **Moderate** — support: 153 — precision: 69.74% — recall: 88.89% — F1: 78.16%
+- **Severe** — support: 21  — precision: 0.00%  — recall: 0.00%  — F1: 0.00%
+- **Proliferative DR** — support: 45  — precision: 55.56% — recall: 44.44% — F1: 49.38%
 
-Note: class IDs correspond to the label encoding used in the dataset. If you use human-readable labels (for example: `0=healthy, 1=disease_A, ...`), update the table accordingly.
+Note: class names correspond to the probability columns in `evaluation_results.csv` (for example: `prob_No DR`, `prob_Mild`, ...). Adjust the names if your dataset uses different labels.
 
 ## Future Improvements
 
