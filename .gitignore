@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# IDEs
+.vscode/
+.idea/
+
+# Mac
+.DS_Store
+
+# Data and models (large files)
+models/
+checkpoints/
+*.h5
+*.keras
+*.pth
+
+# Logs and outputs
+results/
+*.log

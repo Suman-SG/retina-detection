@@ -1,0 +1,6 @@
+streamlit==1.28.0
+tensorflow==2.10.0
+opencv-python==4.8.1.78
+pillow==10.0.1
+numpy==1.24.3
+reportlab==4.5.1
