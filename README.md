@@ -116,6 +116,28 @@ The project includes generated evaluation artifacts:
 
 These files provide insight into model performance and prediction quality.
 
+## Results
+
+Metrics were computed from `evaluation_results.csv` (500 samples):
+
+- **Accuracy:** 81.20%
+- **Weighted precision:** 77.72%
+- **Weighted recall:** 81.20%
+- **Weighted F1-score:** 78.65%
+- **Macro precision:** 57.84%
+- **Macro recall:** 53.97%
+- **Macro F1-score:** 54.68%
+
+Per-class breakdown (as recorded in `evaluation_results.csv`):
+
+- **Class 0** — support: 236 — precision: 95.88% — recall: 98.73% — F1: 97.29%
+- **Class 1** — support: 45  — precision: 68.00% — recall: 37.78% — F1: 48.57%
+- **Class 2** — support: 153 — precision: 69.74% — recall: 88.89% — F1: 78.16%
+- **Class 3** — support: 21  — precision: 0.00%  — recall: 0.00%  — F1: 0.00%
+- **Class 4** — support: 45  — precision: 55.56% — recall: 44.44% — F1: 49.38%
+
+Note: class IDs correspond to the label encoding used in the dataset. If you use human-readable labels (for example: `0=healthy, 1=disease_A, ...`), update the table accordingly.
+
 ## Future Improvements
 
 - Multi-class retinal disease classification
