@@ -91,6 +91,38 @@ cd binary/web
 streamlit run smart_app.py
 ```
 
+## Included model
+
+This repository includes a demo model tracked with Git LFS at:
+
+- `binary/models/quick_test_model.h5`
+
+How to run the demo using the included model (Windows example):
+
+```powershell
+cd binary/web
+# Set MODEL_PATH to the included model (absolute or workspace-relative)
+$env:MODEL_PATH = 'C:\Users\shonu\Desktop\retina_detection\binary\models\quick_test_model.h5'
+streamlit run smart_app.py
+```
+
+How to run a batch prediction from the command line:
+
+```powershell
+# Using explicit --model argument (if supported by your predict.py)
+python predict.py --model binary/models/quick_test_model.h5 --input path\to\images --output out.csv
+
+# Or using the environment variable
+$env:MODEL_PATH = 'binary/models/quick_test_model.h5'
+python predict.py --input path\to\images --output out.csv
+```
+
+Notes:
+
+- Git LFS is required to clone the repository with model files: `git lfs install`.
+- If you clone this repo and the model is missing, run `git lfs pull` to download LFS-tracked files.
+- If your `predict.py` or `smart_app.py` expects a different path, adjust `MODEL_PATH` accordingly.
+
 ## Model Evaluation
 
 Example evaluation command:
